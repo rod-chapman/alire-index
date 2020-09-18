@@ -37,7 +37,7 @@ for file in $CHANGES; do
       continue
    fi
 
-   if ! [ -f ./$file ]; then
+   if ! [ -f ./"$file" ]; then
       echo Skipping deleted file: $file
       continue
    fi
@@ -45,7 +45,7 @@ for file in $CHANGES; do
    # Checks passed, this is a crate we must test
    is_system=false
 
-   crate=$(basename $file .toml | cut -f1 -d-)
+   crate=$(basename "$file" .toml | cut -f1 -d-)
    echo Testing crate: $crate
 
    # Show info for the record
@@ -109,17 +109,18 @@ for file in $CHANGES; do
    fi
    
    # Actual checks
-   echo DEPLOYING CRATE $crate
-   alr get -d --build -n $crate
-
-   if $is_system; then 
+   echo TESTING CRATE $crate
+   if $is_system; then
+      echo INSTALLING SYSTEM CRATE $crate
+      alr get -d -n $crate
       echo DETECTING INSTALLED PACKAGE via crate $crate
       alr show -d --external-detect $crate
    else
+      echo BUILDING REGULAR CRATE $crate
+      alr test --newest -v -d $crate
       echo LISTING EXECUTABLES of crate $crate
-      cd ${crate}_*
-      alr run -d --list
-      cd ..
+      (cd ${crate}_*
+       alr run -d --list)
    fi
 
    echo CRATE $crate TEST ENDED SUCCESSFULLY
