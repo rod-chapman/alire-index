@@ -1,0 +1,13 @@
+authors = ["Alejandro R. Mosteo"]
+description = "Alex's Ada Assortment (of miscellaneous utilities)"
+licenses = ["LGPL 3.0"]
+maintainers = ["alejandro@mosteo.com"]
+maintainers-logins = ["mosteo"]
+name = "aaa"
+version = "0.2.1"
+tags = ["miscellanea", "utility"]
+
+[origin]
+commit = "a82573e399deb4b5ff4564573e0bf6f5098229ce"
+url = "git+https://github.com/mosteo/aaa.git"
+
